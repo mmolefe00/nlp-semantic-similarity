@@ -1,16 +1,16 @@
-# Use pypy as a parent image
-FROM pypy:latest
+# Use the official Python image as the base
+FROM python:latest
+
+# Set the working directory to /app
 WORKDIR /app
+
+# Copy the requirements file into the container
+COPY requirements.txt .
+
+# Install dependencies
+RUN pip install -r requirements.txt
+
+# Copy the rest of the application code into the container
 COPY . /app
 
-# Install packages specified in requirements.txt
-RUN pypy -m pip install --no-cache-dir -r requirements.txt
-
-# Make port 80 available to the world outside this container
-EXPOSE 80
-
-# Define environment variable
-ENV NAME semantic_similarity
-
-# Run semantic_similarity.py when the container launches
-CMD ["pypy", "semantic_similarity.py"]
+CMD python semantic.py
